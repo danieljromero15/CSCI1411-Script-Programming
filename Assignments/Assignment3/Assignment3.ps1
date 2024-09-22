@@ -12,7 +12,7 @@
     Data Found
 .NOTES
     Version:        1.0
-    Author:         <Your Name>
+    Author:         Daniel Romero
     Creation Date:  
     References: Select-String: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-string?view=powershell-6
          Write-Host: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/write-host?view=powershell-6
@@ -84,7 +84,8 @@ cd $Path                                                         #
 ## - Next, output your findings by simply writing your variable $findings out on the next line
 ## HINT: Class slides and lab examples from class may help.
 ## YOUR CODE BELOW HERE
-
+$findings = Select-String -Path "$Path\Logs\*" -Pattern "187.76.80.202"
+Write-Host $findings
 
 
 
@@ -93,6 +94,7 @@ cd $Path                                                         #
 ## howMany takes one argument. See above section called Helper functions for reference
 ## HINT: Your returned count should be: 475
 ## YOUR CODE BELOW HERE
+howMany $findings
 
 
 
@@ -108,7 +110,7 @@ function logSearcher($dir,$text,$showLogs)
     ## Set $results equal to your Select-String statement similiar to #1.
     ## For your -Path paramter use $dir, and -Pattern use $text variable
     ## YOUR CODE BELOW HERE
-
+    $results = Select-String -Path $dir -Pattern $text
 
 
     ## A ShowLogs parameter is used in this function. 
@@ -118,13 +120,15 @@ function logSearcher($dir,$text,$showLogs)
     ## Write a simple if branch to check if $showLogs is equal to $True, 
     ## then the statement code to print the $results variable
     ## YOUR CODE BELOW HERE
-
+    if($showLogs){
+        Write-Host $results
+    }
 
 
     ## Lastly, return the number of hits by using the helper function howMany to output the count of results.
     ## Remember "return" will pass the object outside of the function when it completes.
     ## YOUR CODE BELOW HERE
-  
+    return (howMany $results)
 
 }
 
@@ -138,7 +142,7 @@ function logSearcher($dir,$text,$showLogs)
 ## You can change showLogs to $false after you confirm your findings if you like
 ## HINT: Number of findings should show 254
 ## YOUR CODE BELOW HERE
-
+$results1 = logSearcher -dir "$Path\Logs\*" -text "tonystark" -showLogs $false
 
 
 
@@ -148,7 +152,7 @@ function logSearcher($dir,$text,$showLogs)
 ## - Just like #4, Search for the string "csv" in your second argument.
 ## Number of findings should show 5
 ## YOUR CODE BELOW HERE
-
+$results2 = logSearcher -dir "$Path\Logs\*" -text "csv"
 
 
 ## 6. Yikes, let's find out if those files have any sensitive data. Instead of scanning the Logs folder
@@ -158,7 +162,7 @@ function logSearcher($dir,$text,$showLogs)
 ## - SSN pattern in 123-12-1234 format
 ## - HINT: Look at lecture slides or class lecture demos for examples on patterns.
 ## YOUR CODE BELOW HERE
-
+$ssnResults = logSearcher -dir "$Path\Data\*" -text '\d{3}-\d{2}-\d{4}'
 
 
 
@@ -169,7 +173,7 @@ function logSearcher($dir,$text,$showLogs)
 ## - Just like #5, execute logSearcher function again this time to see how many Credit Card patterns were found.
 ## - Credit Cards pattern will be in 16 digit format with no dashes(-). Example 1234123412341234
 ## YOUR CODE BELOW HERE
-
+$ccResults = logSearcher -dir "$Path\Data\*" -text '\d{16}'
 
 
 
@@ -181,7 +185,7 @@ function logSearcher($dir,$text,$showLogs)
 ## Look at the incidentCost function for example on how it can be used. No need to modify or duplicate it.
 ## HINT: Estimated loss to the business is greater than $200K
 ## YOUR CODE BELOW HERE
-
+incidentCost -cc $ccResults -ssn $ssnResults
 
 
 #----------------------------------------------------------[Complete]-------------------------------------------------------------
