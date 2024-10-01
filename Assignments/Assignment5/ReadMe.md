@@ -5,7 +5,7 @@
 Metasploitable VM 
 
 
-**Goal of assignment:** In this assignment, you will will demonstrate your knowledge of Bash and open source security tools.
+**Goal of assignment:** In this assignment, you will demonstrate your knowledge of Bash and open source security tools.
 
 1. Use of Bash Scripts and basic Bash syntax
 
