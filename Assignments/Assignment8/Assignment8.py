@@ -27,7 +27,8 @@ file = open('logs/access.log', 'r')
 # You will need to use the 'extend' method to add each ip list 
 # to the new list 'ips'
 # YOUR CODE HERE (< 5 lines)
-ip_pattern = "((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}" #unashamedly stole this from stackoverflow, any version I would make would be twice as long at a minimum
+#ip_pattern = "((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}" # this is the correct version, all we're doing with the wrong version is sending bad requests to the server
+ip_pattern = "\\d+\\.\\d+\\.\\d+\\.\\d+"
 for line in file:
     re_test = re.search(ip_pattern, line)
     if re_test is not None:
