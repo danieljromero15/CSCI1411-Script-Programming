@@ -4,7 +4,7 @@ import requests
 
 #### DO NOT MODIFY FUNCTION BELOW ####
 ### The function below simulates
-def simulateTraffic(question,fwObj,showTraffic):
+def simulateTraffic(question,fwObj,showTraffic = False): # modified the function to make verbose optional
     print("*************************Question ",question,"*************************")
     fwObj.verbose = showTraffic
     networkLog = open("networkLog.txt","r")
@@ -31,10 +31,11 @@ def simulateTraffic(question,fwObj,showTraffic):
 # Note: Use "cs1411FW" as the object name
 # Run your script to see traffic flow in. You should see 747 allowed packets.
 # Your code here
+cs1411FW = fw.Firewall("CS1411 Firewall")
 
 
 #Uncomment line below when ready to test your solution
-#simulateTraffic("1",cs1411FW,False)
+simulateTraffic("1",cs1411FW,False)
 
 
 # 2. Now that traffic is flowing through the firewall, the security ops team
@@ -45,22 +46,24 @@ def simulateTraffic(question,fwObj,showTraffic):
 # You should see 1 rule added
 # Blocked: 7
 # Your code here
+cs1411FW.addRule("206.14.8.100", "202.13.6.223", "3389", "Block")
 
 
 
 #Uncomment lines below when ready to test your solution
 # Optional: Verbose Mode, change the value of v to True or False to see traffic blocked.
-#v = False
-#simulateTraffic("2",cs1411FW,v)
+simulateTraffic("2",cs1411FW)
 
 print("*************************Question  3a/3b *************************")
 # 3a. What object type is the rules property of the firewall object?
 # Use a print statement of the answer
 # Your code here
+print(type(cs1411FW.rules))
 
 # 3b. What object type is a rule in the rules property of the firewall object?
 # Use a print statement of the answer
 # Your code here
+print(type(cs1411FW.rules[0]))
 
 
 
@@ -76,13 +79,13 @@ print("*************************Question  3a/3b *************************")
 # A successful solution will show 3 rules (1 from previous question, 2 from this one)
 # Blocked: 201 
 # Your code here
-
+cs1411FW.addRule("*", "*", "3389", "Block")
+cs1411FW.addRule("*", "*", "25", "Block")
 
 
 #Uncomment lines below when ready to test your solution
 # Optional: Verbose Mode, change the value of v to True or False to see traffic blocked.
-#v = False
-#simulateTraffic("4",cs1411FW,v)
+simulateTraffic("4",cs1411FW)
 
 
 # 5. Great Job! The firewall is working as intended but would be better to "pull" a list of 
@@ -92,10 +95,12 @@ print("*************************Question  3a/3b *************************")
 # Researching foreach loops with key/value pairs may be helpful here ;)
 # A successful solution will show 4 rules (2 from previous questions, 2 from the API)
 # Blocked: 327
-
+r = requests.get("https://faculty.ung.edu/lhundt/blockList.json")
+for rule in r.json()['firewallRules']:
+    for ruleVal in rule.values(): #only here because each array object has its own name (Rule1 and Rule2)? I don't care about the name, only value. overcomplicated json tbh
+        cs1411FW.addRule(ruleVal['srcIP'], ruleVal['dstIP'], ruleVal['port'], ruleVal['action'])
 
 
 #Uncomment lines below when ready to test your solution
 # Optional: Verbose Mode, change the value of v to True or False to see traffic blocked.
-#v = False
-#simulateTraffic("5",cs1411FW,v)
+simulateTraffic("5",cs1411FW)

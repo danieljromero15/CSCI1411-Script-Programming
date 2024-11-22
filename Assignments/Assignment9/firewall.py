@@ -64,7 +64,8 @@ class Firewall(object):
             if netPacket.src == rule["src"] and netPacket.dst == rule["dst"] and netPacket.port == rule["port"]:
                 return rule["action"]
             #Your CODE HERE
-   
+            elif rule['src'] == "*" and rule['dst'] == "*" and netPacket.port == rule["port"]:
+                return rule["action"]
             else:
                 continue
                
